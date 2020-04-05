@@ -1,0 +1,70 @@
+version: '3.7'
+services:
+    postgres:
+        image: postgres:12.2
+        container_name: postgres
+        volumes:
+            - ./postgres/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+            - db-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: demo
+            POSTGRES_PASSWORD: demo1234!
+        ports:
+            - "5432:5432"
+        networks:
+            - backend
+
+    authorization:
+        image: authorization_server
+        container_name: authorization-server
+        build:
+            context: ./authorization-server
+            dockerfile: Dockerfile
+        volumes:
+            - ./authorization-server/authorization:/authorization-server/authorization
+        ports:
+            - "5000:5000"
+        depends_on:
+            - postgres
+        networks:
+            - backend
+
+    application:
+        image: application_server
+        container_name: application-server
+        build:
+            context: ./application-server
+            dockerfile: Dockerfile
+        volumes:
+            - ./application-server/authentication:/application-server/authentication
+            - ./application-server/users:/application-server/users
+        ports:
+            - "3000:3000"
+        depends_on:
+            - postgres
+        networks:
+            - backend
+
+    resource:
+        image: resource_server
+        container_name: resource-server
+        build:
+            context: ./resource-server
+            dockerfile: Dockerfile
+        volumes:
+            - ./resource-server/api:/resource-server/api
+            - ./resource-server/unicorns:/resource-server/unicorns
+        ports:
+            - "8080:8080"
+        depends_on:
+            - postgres
+        networks:
+            - backend
+
+networks:
+    backend:
+        name: backend_network
+
+volumes:
+    db-data:
+        name: data_volume

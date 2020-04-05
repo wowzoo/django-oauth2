@@ -1,0 +1,3 @@
+CREATE DATABASE auth_db;
+CREATE DATABASE app_db;
+CREATE DATABASE res_db;

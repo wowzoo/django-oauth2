@@ -1,4 +1,4 @@
-"""api URL Configuration
+"""authorization URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -15,14 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from unicorns.views import UnicornViewSet
 
-router = DefaultRouter()
-router.register('unicorn', UnicornViewSet)
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', include('core.urls')),
     path('admin/', admin.site.urls),
-    path('v1/', include(router.urls)),
-]
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

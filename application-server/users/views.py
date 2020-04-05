@@ -1,31 +1,32 @@
 import requests
 
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from django.conf import settings
-from .serializers import CreateUserSerializer
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
-    '''
+    """
     Registers user to the server. Input should be in the format:
     {"username": "username", "password": "1234abcd"}
-    '''
-    # Put the data from the request into the serializer
-    serializer = CreateUserSerializer(data=request.data)
+    """
+    response = requests.post(
+        f'{settings.AUTHORIZATION_SERVER_URL}/register/',
+        data={
+            'username': request.data['username'],
+            'password': request.data['password']
+        }
+    )
 
-    # Validate the data
-    if serializer.is_valid():
-        # If it is valid, save the data (creates a user).
-        serializer.save()
-
+    if response.status_code == status.HTTP_201_CREATED:
         # Then we get a token for the created user.
         # This could be done differently
         r = requests.post(
-            f'{settings.AUTHORIZATION_SERVER_URL}/token/',
+            f'{settings.AUTHORIZATION_SERVER_URL}/o/token/',
             data={
                 'grant_type': 'password',
                 'username': request.data['username'],
@@ -35,19 +36,19 @@ def register(request):
             },
         )
         return Response(r.json())
-
-    return Response(serializer.errors)
+    else:
+        return Response(response.json(), response.status_code)
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def token(request):
-    '''
+    """
     Gets tokens with username and password. Input should be in the format:
     {"username": "username", "password": "1234abcd"}
-    '''
+    """
     r = requests.post(
-        f'{settings.AUTHORIZATION_SERVER_URL}/token/',
+        f'{settings.AUTHORIZATION_SERVER_URL}/o/token/',
         data={
             'grant_type': 'password',
             'username': request.data['username'],
@@ -63,12 +64,12 @@ def token(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def refresh_token(request):
-    '''
+    """
     Registers user to the server. Input should be in the format:
     {"refresh_token": "<token>"}
-    '''
+    """
     r = requests.post(
-        f'{settings.AUTHORIZATION_SERVER_URL}/token/',
+        f'{settings.AUTHORIZATION_SERVER_URL}/o/token/',
         data={
             'grant_type': 'refresh_token',
             'refresh_token': request.data['refresh_token'],
@@ -83,12 +84,12 @@ def refresh_token(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def revoke_token(request):
-    '''
+    """
     Method to revoke tokens.
     {"token": "<token>"}
-    '''
+    """
     r = requests.post(
-        f'{settings.AUTHORIZATION_SERVER_URL}/revoke_token/',
+        f'{settings.AUTHORIZATION_SERVER_URL}/o/revoke_token/',
         data={
             'token': request.data['token'],
             'client_id': settings.CLIENT_ID,

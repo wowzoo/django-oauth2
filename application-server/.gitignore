@@ -107,6 +107,6 @@ venv.bak/
 *.db
 
 # ETC
-.idea
-.vscode
+.idea/
+.vscode/
 .DS_Store

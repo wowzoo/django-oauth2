@@ -79,8 +79,11 @@ WSGI_APPLICATION = 'authentication.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'app_db',
+        'USER': 'demo',
+        'PASSWORD': 'demo1234!',
+        'HOST': 'postgres',
     }
 }
 
@@ -140,13 +143,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 
 # Application ID, SECRET
-CLIENT_ID = '3lV28Q48Xxr2sl2OfTbCz8JAufLyhDX3BEXPfoCg'
-CLIENT_SECRET = 'GA0cPBW9CDVnm5gqB8iehCrVR0bmkQzh8s7CmPVX0HgKYNtRX4rF6CuHmJv1b58dor48G6HLf0dnXPP1amAIt38IiDOKXQ5bGTlboae8c9Vf8gR1XMSSEX9nBD5ut0fz'
+CLIENT_ID = 'GWIaMAjkNOCJuH9VrbHgEelVQYCxoOSjZH1JbWcZ'
+CLIENT_SECRET = 'PfQSwLr8OBxXi5hwSMzlUEbs2tq07lYvjHaqhdqUihzdptFND4TK9a9pbrK1JsZagSyGpzhSwQCsDlw8XBZ712fsmOR6GI1YXqIgMHNymnasJQJx4aduGYK0uxRBrD97'
 
 
 # Authorization Server
-AUTHORIZATION_SERVER_URL = 'http://localhost:8000/o'
+AUTHORIZATION_SERVER_URL = 'http://authorization:5000'
