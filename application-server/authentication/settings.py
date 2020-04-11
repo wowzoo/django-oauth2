@@ -25,7 +25,7 @@ SECRET_KEY = '2ja^%a)m$6zehby@=53dlv*(yqd%q(186aai9eak%f^jeg+gbv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["tomatobridge.io"]
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',  # this needs to be first
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -151,6 +152,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Application ID, SECRET
 CLIENT_ID = 'GWIaMAjkNOCJuH9VrbHgEelVQYCxoOSjZH1JbWcZ'
@@ -158,4 +161,4 @@ CLIENT_SECRET = 'PfQSwLr8OBxXi5hwSMzlUEbs2tq07lYvjHaqhdqUihzdptFND4TK9a9pbrK1JsZ
 
 
 # Authorization Server
-AUTHORIZATION_SERVER_URL = 'http://authorization:5000'
+AUTHORIZATION_SERVER_URL = 'http://authorization:8086'

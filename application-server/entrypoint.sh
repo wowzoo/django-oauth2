@@ -15,4 +15,4 @@ mkdir -p static
 python manage.py collectstatic
 
 # Start server
-gunicorn --worker-class gevent --workers 2 --bind 0.0.0.0:3000 authentication.wsgi --max-requests 10000 --timeout 5 --keep-alive 5 --log-level info
+gunicorn --worker-class gevent --workers 2 --bind 0.0.0.0:8087 authentication.wsgi --max-requests 10000 --timeout 5 --keep-alive 5 --log-level info

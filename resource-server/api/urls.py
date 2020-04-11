@@ -28,4 +28,4 @@ router.register('unicorn', UnicornViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('v1/', include(router.urls)),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

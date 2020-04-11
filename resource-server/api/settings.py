@@ -25,7 +25,7 @@ SECRET_KEY = 'vqt6r04u8p286$shhm-vvxsd($#9yr8*+c*3+mbv7q)arsx6c$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["tomatobridge.io"]
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',  # this needs to be first
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -128,6 +129,10 @@ AUTHENTICATION_BACKENDS = [
 OAUTH2_PROVIDER = {
     'RESOURCE_SERVER_INTROSPECTION_URL': 'http://authorization:5000/o/introspect/',
     'RESOURCE_SERVER_AUTH_TOKEN': '2LvxHgMDzxvfF94t60iu0Gf8GpSR53',
+    # 'RESOURCE_SERVER_INTROSPECTION_CREDENTIALS': (
+    #     'dexa2zvUVvcOyF1EqesE5MyBPjA4VMaN2exKyzIO',
+    #     'cNAsZ2Ck4u6EfSx1XQLXdcQy049ZTVcZJzYOAFTroaZBv4I0Dfo4lpyIt4w7OWH2mPidDHFgBBs6tzBa0C5EH2eMfj83uwA2SI3fU0yKaWdmm5X8pBQSemigRj55xKGX'
+    # ),
 }
 
 # Internationalization
@@ -154,3 +159,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
