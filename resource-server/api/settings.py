@@ -169,4 +169,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Use dropbox for file storage
 
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-DROPBOX_OAUTH2_TOKEN = 'MTScSSQ6_IAAAAAAAAALqH3zdP_nlLj_A7bbUqZk589k88-nCTRCnrn5emO4Rd92'
+DROPBOX_OAUTH2_TOKEN = ''
