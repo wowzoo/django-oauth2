@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Database migration
-python manage.py makemigrations unicorns
+python manage.py makemigrations unicorns recipes
 python manage.py migrate
 
 # Create superuser

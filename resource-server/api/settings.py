@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'oauth2_provider',
     'rest_framework',
-    'unicorns'
+    'unicorns',
+    'recipes',
 ]
 
 MIDDLEWARE = [
@@ -161,3 +162,11 @@ STATICFILES_DIRS = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Use dropbox for file storage
+
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DROPBOX_OAUTH2_TOKEN = 'MTScSSQ6_IAAAAAAAAALqH3zdP_nlLj_A7bbUqZk589k88-nCTRCnrn5emO4Rd92'

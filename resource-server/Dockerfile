@@ -9,9 +9,10 @@ RUN pip install -r requirements/prod.txt
 
 COPY ./api ./api
 COPY ./unicorns ./unicorns
+COPY ./recipes ./recipes
 COPY ./manage.py ./manage.py
 COPY ./entrypoint.sh ./entrypoint.sh
 
-EXPOSE 8080
+EXPOSE 8088
 
 ENTRYPOINT ["/resource-server/entrypoint.sh"]

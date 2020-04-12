@@ -12,6 +12,6 @@ COPY ./users ./users
 COPY ./manage.py ./manage.py
 COPY ./entrypoint.sh ./entrypoint.sh
 
-EXPOSE 3000
+EXPOSE 8087
 
 ENTRYPOINT ["/application-server/entrypoint.sh"]

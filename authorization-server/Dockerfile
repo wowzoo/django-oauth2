@@ -12,7 +12,7 @@ COPY ./core ./core
 COPY ./manage.py ./manage.py
 COPY ./entrypoint.sh ./entrypoint.sh
 
-EXPOSE 5000
+EXPOSE 8086
 
 ENTRYPOINT ["/authorization-server/entrypoint.sh"]
 
