@@ -1,10 +1,86 @@
 import requests
+import logging
 
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from django.conf import settings
+from rest_framework.views import APIView
+
+
+logger = logging.getLogger(__name__)
+
+
+class UserView(APIView):
+    """
+    View to show user in the system.
+    """
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        logger.info(request.META)
+
+        res = requests.get(
+            f'{settings.AUTHORIZATION_SERVER_URL}/user/',
+        )
+
+        return Response(res.json, res.status_code)
+
+
+class LoginView(APIView):
+    """
+    View for login
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        """
+        Gets tokens with username and password. Input should be in the format:
+        {"username": "username", "password": "1234abcd"}
+        """
+
+        res = requests.post(
+            f'{settings.AUTHORIZATION_SERVER_URL}/o/token/',
+            data={
+                'grant_type': 'password',
+                'username': request.data['username'],
+                'password': request.data['password'],
+                'client_id': settings.CLIENT_ID,
+                'client_secret': settings.CLIENT_SECRET
+            },
+        )
+
+        return Response(res.json())
+
+
+class LogoutView(APIView):
+    """
+    View for logou
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        """
+        Method to revoke tokens.
+        {"token": "<token>"}
+        """
+
+        res = requests.post(
+            f'{settings.AUTHORIZATION_SERVER_URL}/o/revoke_token/',
+            data={
+                'token': request.data['token'],
+                'client_id': settings.CLIENT_ID,
+                'client_secret': settings.CLIENT_SECRET,
+            },
+        )
+
+        # If it goes well return success message (would be empty otherwise)
+        if res.status_code == requests.codes.ok:
+            return Response({'message': 'token revoked'}, res.status_code)
+
+        # Return the error if it goes badly
+        return Response(res.json(), res.status_code)
 
 
 @api_view(['POST'])
@@ -14,7 +90,7 @@ def register(request):
     Registers user to the server. Input should be in the format:
     {"username": "username", "password": "1234abcd"}
     """
-    response = requests.post(
+    res = requests.post(
         f'{settings.AUTHORIZATION_SERVER_URL}/register/',
         data={
             'username': request.data['username'],
@@ -22,7 +98,7 @@ def register(request):
         }
     )
 
-    if response.status_code == status.HTTP_201_CREATED:
+    if res.status_code == status.HTTP_201_CREATED:
         # Then we get a token for the created user.
         # This could be done differently
         r = requests.post(
@@ -37,7 +113,7 @@ def register(request):
         )
         return Response(r.json())
     else:
-        return Response(response.json(), response.status_code)
+        return Response(res.json(), res.status_code)
 
 
 @api_view(['POST'])
@@ -97,7 +173,7 @@ def revoke_token(request):
         },
     )
 
-    # If it goes well return sucess message (would be empty otherwise)
+    # If it goes well return success message (would be empty otherwise)
     if r.status_code == requests.codes.ok:
         return Response({'message': 'token revoked'}, r.status_code)
 

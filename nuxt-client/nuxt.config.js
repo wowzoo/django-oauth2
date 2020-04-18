@@ -43,14 +43,18 @@ export default {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/auth'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:5000/api'
+    // `baseURL` will be prepended to `url` unless `url` is absolute.
+    // It can be convenient to set `baseURL` for an instance of axios to pass relative URLs
+    // to methods of that instance.
+    baseURL: 'http://tomatobridge.io:8088'
   },
   /*
    ** Build configuration
@@ -60,5 +64,39 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  /*
+   ** Auth module configuration
+   ** See https://auth.nuxtjs.org/guide/setup.html
+   */
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'http://tomatobridge.io:8087/auth/login/',
+            method: 'post',
+            propertyName: 'access_token'
+          },
+          logout: {
+            url: 'http://tomatobridge.io:8087/auth/logout/',
+            method: 'post'
+          },
+          user: {
+            url: 'http://tomatobridge.io:8087/auth/user/',
+            method: 'get',
+            propertyName: 'user'
+          }
+        },
+        autoFetchUser: true,
+        tokenRequired: true,
+        tokenName: 'Authorization',
+        tokenType: 'Bearer'
+      }
+    },
+    redirect: { home: '/' }
+  },
+  router: {
+    middleware: ['auth']
   }
 }

@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'oauth2_provider',
     'rest_framework',
+    'corsheaders',
     'users'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',  # this needs to be first
@@ -144,7 +146,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
@@ -162,3 +164,26 @@ CLIENT_SECRET = 'PfQSwLr8OBxXi5hwSMzlUEbs2tq07lYvjHaqhdqUihzdptFND4TK9a9pbrK1JsZ
 
 # Authorization Server
 AUTHORIZATION_SERVER_URL = 'http://authorization:8086'
+
+
+# CORS Configuration
+CORS_ORIGIN_WHITELIST = [
+    "http://tomatobridge.io:3000"
+]
+
+# Logging Configuration
+
+LOG_LEVEL = "DEBUG"
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': LOG_LEVEL,
+    },
+}

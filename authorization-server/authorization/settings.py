@@ -25,7 +25,7 @@ SECRET_KEY = 'bk)6z&jm_jjn%k+r@q^hvq+%ucv)xfyu%-dp3%+tti)q!0#6x0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["tomatobridge.io"]
+ALLOWED_HOSTS = ["authorization", "tomatobridge.io"]
 
 
 # Application definition
@@ -108,6 +108,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication',  # To keep the Browsable API
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+
 # Authentication Backends
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # To keep the Browsable API
@@ -116,7 +128,6 @@ AUTHENTICATION_BACKENDS = [
 
 OAUTH2_PROVIDER = {
     'SCOPES': {
-        'users': 'user details',
         'read': 'Read scope',
         'write': 'Write scope',
         'groups': 'Access to your groups',
@@ -152,3 +163,20 @@ STATICFILES_DIRS = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Logging Configuration
+
+LOG_LEVEL = "DEBUG"
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': LOG_LEVEL,
+    },
+}
