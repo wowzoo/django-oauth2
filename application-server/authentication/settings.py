@@ -25,7 +25,7 @@ SECRET_KEY = '2ja^%a)m$6zehby@=53dlv*(yqd%q(186aai9eak%f^jeg+gbv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["tomatobridge.io"]
+ALLOWED_HOSTS = ["localhost"]
 
 
 # Application definition
@@ -168,7 +168,7 @@ AUTHORIZATION_SERVER_URL = 'http://authorization:8086'
 
 # CORS Configuration
 CORS_ORIGIN_WHITELIST = [
-    "http://tomatobridge.io:3000"
+    "http://localhost:3000"
 ]
 
 # Logging Configuration

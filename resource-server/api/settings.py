@@ -25,7 +25,7 @@ SECRET_KEY = 'vqt6r04u8p286$shhm-vvxsd($#9yr8*+c*3+mbv7q)arsx6c$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["tomatobridge.io"]
+ALLOWED_HOSTS = ["localhost"]
 
 
 # Application definition

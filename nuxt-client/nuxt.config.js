@@ -54,7 +54,7 @@ export default {
     // `baseURL` will be prepended to `url` unless `url` is absolute.
     // It can be convenient to set `baseURL` for an instance of axios to pass relative URLs
     // to methods of that instance.
-    baseURL: 'http://tomatobridge.io:8088'
+    baseURL: 'http://localhost:8088'
   },
   /*
    ** Build configuration
@@ -74,12 +74,12 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: 'http://tomatobridge.io:8087/auth/login/',
+            url: 'http://localshot:8087/auth/login/',
             method: 'post',
             propertyName: 'access_token'
           },
           logout: {
-            url: 'http://tomatobridge.io:8087/auth/logout/',
+            url: 'http://localhost:8087/auth/logout/',
             method: 'post'
           },
           user: {

@@ -25,7 +25,7 @@ SECRET_KEY = 'bk)6z&jm_jjn%k+r@q^hvq+%ucv)xfyu%-dp3%+tti)q!0#6x0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["authorization", "tomatobridge.io"]
+ALLOWED_HOSTS = ["authorization", "localhost"]
 
 
 # Application definition
