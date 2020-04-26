@@ -74,16 +74,16 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: 'http://localshot:8087/auth/login/',
+            url: 'http://localshot:8087/users/token/',
             method: 'post',
             propertyName: 'access_token'
           },
           logout: {
-            url: 'http://localhost:8087/auth/logout/',
+            url: 'http://localhost:8087/users/token/revoke/',
             method: 'post'
           },
           user: {
-            url: 'http://tomatobridge.io:8087/auth/user/',
+            url: 'http://localhost:8087/users/me/',
             method: 'get',
             propertyName: 'user'
           }

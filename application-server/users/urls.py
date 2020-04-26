@@ -3,11 +3,9 @@ from . import views
 
 
 urlpatterns = [
-    path('login/', views.LoginView.as_view(), name='login'),
-    path('logout/', views.LogoutView.as_view(), name='logout'),
-    path('user/', views.UserView.as_view(), name='user'),
-    path('register/', views.register),
-    path('token/', views.token),
-    path('token/refresh/', views.refresh_token),
-    path('token/revoke/', views.revoke_token),
+    path('token/', views.RetrieveTokenView.as_view(), name='token'),
+    path('token/refresh/', views.RefreshTokenView.as_view(), name='token_refresh'),
+    path('token/revoke/', views.RevokeTokenView.as_view(), name='token_revoke'),
+    path('me/', views.UserView.as_view(), name='me'),
+    path('register/', views.RegisterView.as_view(), name='register'),
 ]

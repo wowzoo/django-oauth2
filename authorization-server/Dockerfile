@@ -1,5 +1,5 @@
 FROM python:3.7.5
-MAINTAINER wowzoo <wowzoo@gmail.com>
+LABEL author="wowzoo <wowzoo@gmail.com>"
 
 RUN mkdir -p authorization-server
 WORKDIR authorization-server
@@ -7,12 +7,9 @@ WORKDIR authorization-server
 COPY ./requirements ./requirements
 RUN pip install -r requirements/prod.txt
 
-COPY ./authorization ./authorization
-COPY ./core ./core
+COPY ./auth ./auth
+COPY ./users ./users
 COPY ./manage.py ./manage.py
 COPY ./entrypoint.sh ./entrypoint.sh
 
-EXPOSE 8086
-
 ENTRYPOINT ["/authorization-server/entrypoint.sh"]
-

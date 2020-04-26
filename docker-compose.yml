@@ -2,85 +2,25 @@ version: '3.7'
 services:
     nginx:
         image: nginx:1.17
-        container_name: nginx-server
-        ports:
-            - "8080:8080"
-        volumes:
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-            - ./nuxt-client/dist:/usr/share/nginx/html
         depends_on:
             - authorization
             - application
             - resource
-        networks:
-            - backend
 
     postgres:
         image: postgres:12.2
-        container_name: postgres
-        volumes:
-            - ./postgres/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-            - db-data:/var/lib/postgresql/data
-        environment:
-            POSTGRES_USER: demo
-            POSTGRES_PASSWORD: demo1234!
-        ports:
-            - "5432:5432"
-        networks:
-            - backend
 
     authorization:
         image: authorization_server
-        container_name: authorization-server
-        build:
-            context: ./authorization-server
-            dockerfile: Dockerfile
-        volumes:
-            - ./authorization-server/authorization:/authorization-server/authorization
-        ports:
-            - "8086:8086"
         depends_on:
             - postgres
-        networks:
-            - backend
 
     application:
         image: application_server
-        container_name: application-server
-        build:
-            context: ./application-server
-            dockerfile: Dockerfile
-        volumes:
-            - ./application-server/authentication:/application-server/authentication
-            - ./application-server/users:/application-server/users
-        ports:
-            - "8087:8087"
         depends_on:
             - postgres
-        networks:
-            - backend
 
     resource:
         image: resource_server
-        container_name: resource-server
-        build:
-            context: ./resource-server
-            dockerfile: Dockerfile
-        volumes:
-            - ./resource-server/api:/resource-server/api
-            - ./resource-server/unicorns:/resource-server/unicorns
-        ports:
-            - "8088:8088"
         depends_on:
             - postgres
-        networks:
-            - backend
-
-networks:
-    backend:
-        name: backend_network
-        driver: bridge
-
-volumes:
-    db-data:
-        name: data_volume

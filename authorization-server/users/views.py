@@ -29,21 +29,22 @@ class UserView(APIView):
         return Response(status.HTTP_200_OK)
 
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def register(request):
-    """
-    Registers user to the server. Input should be in the format:
-    {"username": "username", "password": "1234abcd"}
-    """
-    # Put the data from the request into the serializer
-    serializer = CreateUserSerializer(data=request.data)
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
 
-    # Validate the data
-    if serializer.is_valid():
-        # If it is valid, save the data (creates a user).
-        serializer.save()
+    def post(self, request):
+        """
+        Registers user to the server. Input should be in the format:
+        {"username": "username", "password": "1234abcd"}
+        """
+        # Put the data from the request into the serializer
+        serializer = CreateUserSerializer(data=request.data)
 
-        return Response(status=status.HTTP_201_CREATED)
+        # Validate the data
+        if serializer.is_valid():
+            # If it is valid, save the data (creates a user).
+            serializer.save()
 
-    return Response(serializer.errors)
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors)

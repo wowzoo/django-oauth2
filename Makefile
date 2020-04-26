@@ -1,17 +1,17 @@
-.PHONY: buildup down
+.PHONY: buildup down res_log app_log auth_log
 
 buildup:
-	docker-compose up -d --build
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
 down:
-	docker-compose down
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
 
 res_log:
-	docker-compose logs -f --tail=10 resource
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml logs -f --tail=100 resource
 
 app_log:
-	docker-compose logs -f --tail=10 application
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml logs -f --tail=100 application
 
 auth_log:
-	docker-compose logs -f --tail=10 authorization
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml logs -f --tail=100 authorization
 
