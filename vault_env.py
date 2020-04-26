@@ -46,7 +46,7 @@ if __name__ == "__main__":
     dir_path.mkdir(exist_ok=True)
 
     # get token
-    github_token = "e67942d5461cf166a018d7ac6ea866467c7957ab"
+    github_token = "git_personal_access_token"
     token = get_token(github_token)
 
     # get postgres env
