@@ -1,5 +1,6 @@
 import urllib.request
 import json
+import os
 
 from pathlib import Path
 
@@ -46,7 +47,7 @@ if __name__ == "__main__":
     dir_path.mkdir(exist_ok=True)
 
     # get token
-    github_token = "git_personal_access_token"
+    github_token = os.environ['GIT_TOKEN']
     token = get_token(github_token)
 
     # get postgres env
